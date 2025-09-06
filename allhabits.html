@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Habits</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: #f5f5f5;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+  }
+
+  .container {
+    width: 90%;
+    max-width: 390px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    margin-top: 20px;
+    flex: 1 0 auto;
+  }
+
+  .back-btn {
+    border: none;
+    background: none;
+    font-size: 20px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    color: #2196F3;
+  }
+
+  h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
+  }
+
+  .item {
+    min-height: 50px;
+    margin-bottom: 10px;
+    background: rgba(33,150,243,0.08);
+    border: 1px solid rgba(51,51,51,0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    font-size: 15px;
+    color: #333;
+  }
+
+  .item span.time {
+    color: #2196F3;
+    font-weight: 600;
+    margin-left: 10px;
+  }
+
+  /* Bottom Navigation */
+  .bottom-nav {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 370px;
+    height: 59px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 30px;
+    box-shadow: 0px -10px 100px rgba(86,86,86,0.25);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .bottom-nav button {
+    flex: 1;
+    background: none;
+    border: none;
+    font-size: 12px;
+    color: rgba(51,51,51,0.7);
+    cursor: pointer;
+    padding: 6px 0;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .bottom-nav button i {
+    font-size: 18px;
+    margin-bottom: 3px;
+  }
+
+  .bottom-nav button.active {
+    color: #fff;
+    background: #2196F3;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <button class="back-btn" onclick="window.history.back()">←</button>
+  <h2>All Habits</h2>
+  <div id="habits-section"></div>
+</div>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+  <button onclick="window.location.href='home.html'">
+    <i class="fas fa-home"></i>
+    Home
+  </button>
+  <button class="active" onclick="window.location.href='allhabits.html'">
+    <i class="fas fa-bullseye"></i>
+    Habits
+  </button>
+  <button onclick="window.location.href='alltasks.html'">
+    <i class="fas fa-tasks"></i>
+    Tasks
+  </button>
+  <button onclick="window.location.href='timer.html'">
+    <i class="fas fa-clock"></i>
+    Timer
+  </button>
+</div>
+
+<script>
+  const habitsSection = document.getElementById('habits-section');
+  const allHabits = JSON.parse(localStorage.getItem("habits")) || [];
+
+  if(allHabits.length === 0) {
+    habitsSection.innerHTML = "<p style='text-align:center; color:gray;'>No habits added yet.</p>";
+  } else {
+    allHabits.forEach(habit => {
+      const div = document.createElement('div');
+      div.classList.add('item');
+
+      const nameSpan = document.createElement('span');
+      nameSpan.textContent = habit.name;
+
+      const timeSpan = document.createElement('span');
+      timeSpan.classList.add('time');
+      timeSpan.textContent = habit.time || "";
+
+      div.appendChild(nameSpan);
+      div.appendChild(timeSpan);
+      habitsSection.appendChild(div);
+    });
+  }
+</script>
+</body>
+</html>
